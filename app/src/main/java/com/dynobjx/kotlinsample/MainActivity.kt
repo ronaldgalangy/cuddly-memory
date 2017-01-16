@@ -15,7 +15,8 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
     val swipeRefresh: SwipeRefreshLayout by bindView(R.id.swipe_refresh)
 
     private lateinit var adapter: PostAdapter
-    private var posts: ArrayList<Post> = ArrayList()
+    private var posts: MutableList<Post> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +30,7 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     override fun onClickItem(index: Int, post: Post) {
-        val ss: Post = Post("130", "130", "130", "130")
-        showToast((ss in posts).toString())
+        showToast((post in posts).toString())
     }
 
     override fun onRefresh() {

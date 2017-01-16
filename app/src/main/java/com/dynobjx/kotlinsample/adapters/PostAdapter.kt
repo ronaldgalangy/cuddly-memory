@@ -9,18 +9,18 @@ import android.widget.TextView
 import butterknife.bindView
 import com.dynobjx.kotlinsample.R
 import com.dynobjx.kotlinsample.models.Post
-import java.util.ArrayList
 
 /**
  * Created by root on 1/13/17.
  */
-class PostAdapter constructor(context: Context, posts: ArrayList<Post>,
+class PostAdapter constructor(context: Context, posts: MutableList<Post>,
                               onclick: OnClickItemListener):
         RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     private var context: Context
-    private var posts: ArrayList<Post>
+    private var posts: MutableList<Post>
     private var onItemClick: OnClickItemListener
+
 
     init {
         println("init block!")
@@ -32,7 +32,7 @@ class PostAdapter constructor(context: Context, posts: ArrayList<Post>,
     override fun getItemCount() = posts.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val post: Post = this.posts.get(position)
+        val post: Post = posts[position]
         holder.tvTitle.text = post.title
         holder.tvBody.text = post.body
         holder.itemView.setOnClickListener { onItemClick.onClickItem(position, post) }
