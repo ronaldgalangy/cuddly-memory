@@ -2,17 +2,12 @@ package com.dynobjx.kotlinsample
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
-import butterknife.bindView
 import com.dynobjx.kotlinsample.adapters.PostAdapter
 import com.dynobjx.kotlinsample.models.Post
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
-        PostAdapter.OnClickItemListener {
-
-    val rvPost: RecyclerView by bindView(R.id.rv_post)
-    val swipeRefresh: SwipeRefreshLayout by bindView(R.id.swipe_refresh)
+class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var adapter: PostAdapter
     private var posts: MutableList<Post> = ArrayList()
@@ -21,16 +16,12 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //swipeRefresh.setOnRefreshListener(this)
+        swipe_refresh.setOnRefreshListener(this)
 
         (1..100).mapTo(posts) { Post(it.toString(), it.toString(), it.toString(), "body : $it") }
-        rvPost.setHasFixedSize(true)
-        adapter = PostAdapter(this, posts, this)
-        rvPost.adapter = adapter
-    }
-
-    override fun onClickItem(index: Int, post: Post) {
-        showToast((post in posts).toString())
+        rv_post.setHasFixedSize(true)
+        adapter = PostAdapter(this, posts, { showToast(it.body) })
+        rv_post.adapter = adapter
     }
 
     override fun onRefresh() {
